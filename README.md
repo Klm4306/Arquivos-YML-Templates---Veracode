@@ -65,3 +65,21 @@ VeracodePolicyName  → Nome da política usada no Pipeline Scan
 - [ ] Secrets configurados no repositório?
 - [ ] Nome do job/branch bate com o trigger (`on: push branches`)?
 - [ ] Testado via `workflow_dispatch` antes de depender do push automático?
+
+---
+
+## 🛠️ Flags importantes para diagnóstico e execução
+
+🔍 --debug
+Use --debug nas execuções do Veracode para habilitar logs mais detalhados. A flag é especialmente útil para investigar problemas de autenticação, upload, comunicação com a plataforma, configuração dos parâmetros e comportamento do wrapper.
+
+Exemplo:
+
+java -jar VeracodeJavaAPI.jar ... --debug
+
+⚠️ Atenção: os logs de debug podem expor informações adicionais da execução. Não publique logs completos contendo credenciais, tokens ou secrets no repositório ou em issues públicas.
+
+---
+
+## 💡 Recomendação de troubleshooting:
+Ao investigar uma falha no pipeline, primeiro execute novamente com --debug e preserve os logs da execução. Compare principalmente as etapas de autenticação → empacotamento → upload → scan → resultado/policy, pois isso ajuda a identificar em qual etapa o problema ocorreu.
