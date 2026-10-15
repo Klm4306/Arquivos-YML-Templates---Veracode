@@ -67,6 +67,23 @@ jobs:
         run: |
           curl -sSL 'https://sca-downloads.veracode.com/ci.sh' | bash -s scan --update-advisor --allow-dirty
 
+  Veracode_IaC:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Veracode CLI
+        run: curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+
+      - name: Veracode IaC
+        continue-on-error: true
+        env:
+          VERACODE_API_KEY_ID: ${{ secrets.VeracodeID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VeracodeKey }}
+        run: |
+          ./veracode scan --type directory --source . --format table
+
   Veracode_SAST:
     runs-on: ubuntu-latest
     needs: Package
